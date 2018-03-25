@@ -13,7 +13,10 @@
 ## 개발 환경 및 개발 툴
 * ECLIPSE
 * JSP
+* JAVA
 * SPRING FRAMEWORK
 * BOOTSTRAP
-* AWS
+* AWS ec2
+* AWS RDS
 * MYSQL
+* and so on ....
