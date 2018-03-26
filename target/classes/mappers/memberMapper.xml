@@ -12,6 +12,10 @@
 		SELECT name FROM members WHERE email=#{email}
 	</select>
 	
+	<select id="checkId" resultType="int" parameterType="memberVO">
+		SELECT COUNT(*) FROM members WHERE email = #{email}
+	</select>
+	
 	<insert id="insertMember" parameterType="memberVO">
 		INSERT INTO members(name, email, password) VALUES (#{name}, #{email}, #{password});
 	</insert>
