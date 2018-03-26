@@ -30,4 +30,10 @@ public class MemberServiceImpl implements MemberService {
 		dao.insertMember(vo);
 	}
 
+	@Override
+	public int checkId(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.checkId(vo);
+	}
+
 }

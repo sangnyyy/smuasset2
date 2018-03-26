@@ -32,4 +32,9 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert(Namespace+".insertMember", vo);
 	}
 
+	@Override
+	public int checkId(MemberVO vo) {
+		return sqlSession.selectOne(Namespace+".checkId", vo);
+	}
+
 }

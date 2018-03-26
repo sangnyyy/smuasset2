@@ -13,6 +13,7 @@
 <link rel="icon" href="resources/logo.ico">
 
 <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="resources/bootstrap/css/checkid.css" rel="stylesheet"> -->
 <style>
 .header-signup {
 	background-color: #32BEBE;
@@ -104,13 +105,14 @@
 				class="form-control" id="userName" aria-describedby="nameHelp"
 				placeholder="Enter name" style="width: 250px" name="name">
 		</div>
-		<div class="form-group">
+		<div class="form-group"">
 			<label for="exampleInputEmail1">이메일</label> <input type="email"
 				class="form-control" id="exampleInputEmail1"
 				aria-describedby="emailHelp" placeholder="Enter email"
-				style="width: 250px" name="email">
-
+				style="width: 250px; " name="email">
+			<div id="checkMsg"></div>
 		</div>
+		<input type="button" value="중복확인" id="checkBtn" class="btn btn-primary">			
 		<div class="form-group">
 			<label for="exampleInputPassword1">비밀번호</label> <input
 				type="password" class="form-control" id="exampleInputPassword1"
@@ -130,5 +132,26 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
 	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#checkBtn').on('click', function(){
+				$.ajax({
+					type:'POST',
+					url:'/checkid',
+					data:{
+						"email":$('#exampleInputEmail1').val()
+					},
+					success:function(data){
+						 	if($.trim(data) == 0){
+		                        $('#checkMsg').html('<p style="font-size: 8px">사용 가능합니다.</p>');
+		                    }
+		                    else{
+		                        $('#checkMsg').html('<p style="font-size: 8px">사용이 불가능합니다.</p>');
+		                    }
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

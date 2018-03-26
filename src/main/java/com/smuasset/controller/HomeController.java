@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smuasset.dto.MemberVO;
 import com.smuasset.service.MemberService;
@@ -50,7 +51,14 @@ public class HomeController {
 
 		return "index";
 	}
-
+	@ResponseBody
+	@RequestMapping(value="checkid", method = RequestMethod.POST)
+	public String checkId(HttpServletRequest req, Model model) {
+		MemberVO vo = new MemberVO();
+		vo.setEmail(req.getParameter("email"));
+		int checkNum = service.checkId(vo);
+		return String.valueOf(checkNum);
+	}
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpServletResponse res, HttpServletRequest req, HttpSession session) throws IOException {
 		try {
