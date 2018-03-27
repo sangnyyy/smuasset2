@@ -11,18 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
 <link rel="icon" href="resources/logo.ico">
-
 <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- <link href="resources/bootstrap/css/checkid.css" rel="stylesheet"> -->
-<style>
+<link href="resources/mycss/signup.css" rel="stylesheet">
+<!-- <style>
 .header-signup {
 	background-color: #32BEBE;
 	height: 150px;
 	margin-top: 50px;
 }
 
-<!--
-상단 영역 -->.navbar-collapse.collapse {
+.navbar-collapse.collapse {
 	width: 1200px;
 }
 
@@ -36,7 +34,7 @@
 	font-weight: normal;
 }
 </style>
-
+ -->
 <title>회원가입</title>
 </head>
 <body>
@@ -54,10 +52,10 @@
 			</div>
 
 			<c:choose>
-				<c:when test="${sessionScope.name ne null }">
+				<c:when test="${sessionScope.nickname ne null }">
 				<div id="navbar" class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right" style="height:30px;">
-						<span class="navbar-brand" style="padding-top:7px;">${sessionScope.name }님 환영합니다.</span>
+						<span class="navbar-brand" style="padding-top:7px;">${sessionScope.nickname }님 환영합니다.</span>
 							<button type="submit" class="btn btn-success">로그아웃</button>
 					</form>					
 				</div>
@@ -99,33 +97,49 @@
 	</div>
  	<spring:hasBindErrors name="memberRegReq" />
 	<form method="POST"
-		style="margin: 0 auto; width: 250px; margin-top: 30px">
-		<div class="form-group">
+		style="margin: 100 auto; width: 260px; margin-top: 30px">
+		
+		<div class="form-group bottom-form-group">
 			<label for="userName">이름</label> <input type="text"
 				class="form-control" id="userName" aria-describedby="nameHelp"
 				placeholder="Enter name" style="width: 250px" name="name">
 		</div>
-		<div class="form-group"">
-			<label for="exampleInputEmail1">이메일</label> <input type="email"
-				class="form-control" id="exampleInputEmail1"
+		
+		<div class="form-group bottom-form-group">
+			<label for="exampleInputEmail">이메일</label> <input type="email"
+				class="form-control" id="exampleInputEmail"
 				aria-describedby="emailHelp" placeholder="Enter email"
-				style="width: 250px; " name="email">
-			<div id="checkMsg"></div>
+				style="width: 250px; display:block;" name="email">
+			<div id="checkEmail"></div>
+			<input type="button" value="중복확인" id="checkBtn" class="btn btn-primary">
 		</div>
-		<input type="button" value="중복확인" id="checkBtn" class="btn btn-primary">			
-		<div class="form-group">
+	
+		
+		<div class="form-group bottom-form-group">
+			<label for="exampleInputNickname">닉네임</label> <input type="text"
+				class="form-control" id="exampleInputNickname"
+				aria-describedby="nicknameHelp" placeholder="Enter nickname"
+				style="width: 250px;" name="nickname">
+			<div id="checkNickname"></div>
+			<input type="button" id="checkNickBtn" value="중복확인"  class="btn btn-primary">		
+		</div>
+
+		
+		<div class="form-group bottom-form-group">
 			<label for="exampleInputPassword1">비밀번호</label> <input
 				type="password" class="form-control" id="exampleInputPassword1"
 				placeholder="Password" style="width: 250px" name="password">
 			<small id="passwordHelp" class="form-text text-muted"
 				style="font-size: 8px">길이는 6자 이상이어야 합니다.</small>
 		</div>
-		<div class="form-group">
+		
+		<div class="form-group bottom-form-group">
 			<label for="exampleInputPassword2">비밀번호 재확인</label> <input
-				type="password" class="form-control" id="exampleInputPassword1"
+				type="password" class="form-control" id="exampleInputPassword2"
 				placeholder="Password" style="width: 250px" name="confirmPw">
 		</div>
-		<button type="submit" class="btn btn-primary">가입하기</button>
+		
+		<button type="submit" class="btn btn-primary" id="signUpBtn">가입하기</button>
 	</form>
 	
 	<script
@@ -139,14 +153,34 @@
 					type:'POST',
 					url:'/checkid',
 					data:{
-						"email":$('#exampleInputEmail1').val()
+						"email":$('#exampleInputEmail').val()
 					},
 					success:function(data){
 						 	if($.trim(data) == 0){
-		                        $('#checkMsg').html('<p style="font-size: 8px">사용 가능합니다.</p>');
+		                        $('#checkEmail').html('<p style="font-size: 8px">사용 가능합니다.</p>');
+		                    }else if($.trim(data) == -1){
+		                        $('#checkEmail').html('<p style="font-size: 8px; color: red">이메일을 입력하세요.</p>');
+			                }else{
+		                        $('#checkEmail').html('<p style="font-size: 8px; color: red">사용이 불가능합니다.</p>');
 		                    }
-		                    else{
-		                        $('#checkMsg').html('<p style="font-size: 8px">사용이 불가능합니다.</p>');
+					}
+				});
+			});
+			
+			$('#checkNickBtn').on('click', function(){
+				$.ajax({
+					type:'POST',
+					url:'/checknick',
+					data:{
+						"nickname":$('#exampleInputNickname').val()
+					},
+					success:function(data){
+						 	if($.trim(data) == 0){
+		                        $('#checkNickname').html('<p style="font-size: 8px">사용 가능합니다.</p>');
+		                    }else if($.trim(data) == -1){
+		                        $('#checkNickname').html('<p style="font-size: 8px; color: red">닉네임을 입력하세요.</p>');
+			                }else{
+		                        $('#checkNickname').html('<p style="font-size: 8px; color: red">사용이 불가능합니다.</p>');
 		                    }
 					}
 				});

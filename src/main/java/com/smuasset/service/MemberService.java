@@ -9,4 +9,5 @@ public interface MemberService {
 	public List<MemberVO> selectMember(MemberVO vo);
 	public void insertMember(MemberVO vo);
 	public int checkId(MemberVO vo);
+	public int checkNick(MemberVO vo);
 }

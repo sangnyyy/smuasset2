@@ -1,0 +1,29 @@
+.header-signup {
+	background-color: #32BEBE;
+	height: 150px;
+	margin-top: 50px;
+}
+
+<!--
+상단 영역 -->.navbar-collapse.collapse {
+	width: 1200px;
+}
+
+.navbar-brand {
+	font-size: 25px;
+	color: blue;
+}
+
+.form-group {
+	font-size: 20px;
+	font-weight: normal;
+
+}
+
+.form-group.bottom-form-group{
+	width: 400px;	
+}
+
+#signUpBtn {
+	background-color: red;
+}

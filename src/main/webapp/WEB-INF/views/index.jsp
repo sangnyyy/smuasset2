@@ -49,14 +49,14 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/main">SMU ASSET</a>
+				<a class="navbar-brand" href="/">SMU ASSET</a>
 			</div>
 
 			<c:choose>
-				<c:when test="${sessionScope.name ne null }">
+				<c:when test="${sessionScope.nickname ne null }">
 				<div id="navbar" class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right" style="height:30px;" action="/logout">
-						<span class="navbar-brand" style="padding-top:7px;">${sessionScope.name }님 환영합니다.</span>
+						<span class="navbar-brand" style="padding-top:7px;">${sessionScope.nickname }님 환영합니다.</span>
 							<button type="submit" class="btn btn-success">로그아웃</button>
 					</form>					
 				</div>

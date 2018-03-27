@@ -37,4 +37,10 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne(Namespace+".checkId", vo);
 	}
 
+	@Override
+	public int checkNick(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(Namespace+".checkNick", vo);
+	}
+
 }

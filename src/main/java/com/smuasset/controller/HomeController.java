@@ -35,9 +35,7 @@ public class HomeController {
 	@Inject
 	MemberService service;
 
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -51,14 +49,35 @@ public class HomeController {
 
 		return "index";
 	}
+	
 	@ResponseBody
-	@RequestMapping(value="checkid", method = RequestMethod.POST)
+	@RequestMapping(value="/checkid", method = RequestMethod.POST)
 	public String checkId(HttpServletRequest req, Model model) {
 		MemberVO vo = new MemberVO();
-		vo.setEmail(req.getParameter("email"));
-		int checkNum = service.checkId(vo);
+		int checkNum;
+		if(req.getParameter("email") == null || req.getParameter("email").trim().isEmpty()) {
+			checkNum = -1;
+		}else {
+			vo.setEmail(req.getParameter("email"));
+			checkNum = service.checkId(vo);
+		}
 		return String.valueOf(checkNum);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checknick", method = RequestMethod.POST)
+	public String checkNick(HttpServletRequest req, Model model) {
+		MemberVO vo = new MemberVO();
+		int checkNum;
+		if(req.getParameter("nickname") == null || req.getParameter("nickname").trim().isEmpty()) {
+			checkNum = -1;
+		}else {
+			vo.setNickname(req.getParameter("nickname"));
+			checkNum = service.checkNick(vo);
+		}
+		return String.valueOf(checkNum);
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(HttpServletResponse res, HttpServletRequest req, HttpSession session) throws IOException {
 		try {
@@ -71,7 +90,7 @@ public class HomeController {
 			int checkNum = service.loginCheck(vo);
 			if (checkNum > 0) {
 				List<MemberVO> list = service.selectMember(vo);
-				session.setAttribute("name", list.get(0).getName());
+				session.setAttribute("nickname", list.get(0).getNickname());
 				out.println("<script>alert('로그인을 성공하였습니다.'); location.href='/'</script>");
 				out.flush();
 				out.close();
@@ -89,7 +108,7 @@ public class HomeController {
 	public void logOut(HttpServletResponse res, HttpSession session) throws IOException {
 		res.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = res.getWriter();
-		session.removeAttribute("name");
+		session.removeAttribute("nickname");
 		out.println("<script>alert('로그아웃을 성공하였습니다!'); location.href='/'</script>");
 		out.flush();
 		out.close();
@@ -107,18 +126,47 @@ public class HomeController {
 			req.setCharacterEncoding("UTF-8");	//POST방식 encoding 해결
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
-			if(req.getParameter("password").equals(req.getParameter("confirmPw"))) {
-				vo.setName(req.getParameter("name"));
-				vo.setEmail(req.getParameter("email"));
-				vo.setPassword(req.getParameter("password"));
-				service.insertMember(vo);
-				out.println("<script>alert('회원가입을 성공하였습니다!'); location.href='/'</script>");
+			if(req.getParameter("name")==null || req.getParameter("name").trim().isEmpty()) {
+				out.println("<script>alert('이름을 확인하세요!'); location.href='/signup'</script>");
+				out.flush();
+				out.close();
+			}
+			if(req.getParameter("email")==null || req.getParameter("email").trim().isEmpty()) {
+				out.println("<script>alert('이메일을 확인하세요!'); location.href='/signup'</script>");
+				out.flush();
+				out.close();
+			}
+			if(req.getParameter("nickname")==null || req.getParameter("nickname").trim().isEmpty()) {
+				out.println("<script>alert('닉네임을 확인하세요!'); location.href='/signup'</script>");
+				out.flush();
+				out.close();
+			}
+			if((req.getParameter("password")==null || req.getParameter("password").trim().isEmpty())
+					|| (req.getParameter("confirmPw")==null || req.getParameter("confirmPw").trim().isEmpty())) {
+				out.println("<script>alert('비밀번호를 확인하세요!'); location.href='/signup'</script>");
 				out.flush();
 				out.close();
 			}else {
-				out.println("<script>alert('비밀번호가 일치하지 않습니다.'); location.href='/signup'</script>");
-				out.flush();
-				out.close();
+				if(req.getParameter("password").length() < 6) {
+					out.println("<script>alert('비밀번호는 6자 이상이어야 합니다.'); location.href='/signup'</script>");
+					out.flush();
+					out.close();
+				}else {
+					if(req.getParameter("password").equals(req.getParameter("confirmPw"))) {
+						vo.setName(req.getParameter("name"));
+						vo.setEmail(req.getParameter("email"));
+						vo.setPassword(req.getParameter("password"));
+						vo.setNickname(req.getParameter("nickname"));
+						service.insertMember(vo);
+						out.println("<script>alert('회원가입을 성공하였습니다!'); location.href='/'</script>");
+						out.flush();
+						out.close();
+					}else {
+						out.println("<script>alert('비밀번호가 일치하지 않습니다.'); location.href='/signup'</script>");
+						out.flush();
+						out.close();
+					}
+				}
 			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
