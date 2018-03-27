@@ -36,4 +36,10 @@ public class MemberServiceImpl implements MemberService {
 		return dao.checkId(vo);
 	}
 
+	@Override
+	public int checkNick(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.checkNick(vo);
+	}
+
 }

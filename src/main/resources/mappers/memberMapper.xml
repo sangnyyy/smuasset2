@@ -9,14 +9,18 @@
 	</select>    
 	
 	<select id="selectMember" resultType="memberVO" parameterType="memberVO">
-		SELECT name FROM members WHERE email=#{email}
+		SELECT nickname FROM members WHERE email=#{email}
 	</select>
 	
 	<select id="checkId" resultType="int" parameterType="memberVO">
 		SELECT COUNT(*) FROM members WHERE email = #{email}
 	</select>
 	
+	<select id="checkNick" resultType="int" parameterType="memberVO">
+		SELECT COUNT(*) FROM members WHERE nickname = #{nickname}
+	</select>
+	
 	<insert id="insertMember" parameterType="memberVO">
-		INSERT INTO members(name, email, password) VALUES (#{name}, #{email}, #{password});
+		INSERT INTO members(name, email, password, nickname) VALUES (#{name}, #{email}, #{password}, #{nickname});
 	</insert>
 </mapper>
