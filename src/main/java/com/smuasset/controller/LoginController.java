@@ -97,16 +97,16 @@ public class LoginController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public void signUpFinish(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		
-		MemberVO vo = new MemberVO();
-		vo.setName(req.getParameter("name"));
-		vo.setEmail(req.getParameter("email"));
-		vo.setPassword(req.getParameter("password"));
-		vo.setNickname(req.getParameter("nickname"));
 
 		try {
 			req.setCharacterEncoding("UTF-8"); // POST방식 encoding 해결
 			res.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = res.getWriter();
+			MemberVO vo = new MemberVO();
+			vo.setName(req.getParameter("name"));
+			vo.setEmail(req.getParameter("email"));
+			vo.setPassword(req.getParameter("password"));
+			vo.setNickname(req.getParameter("nickname"));
 			if (service.checkId(vo) > 0 || service.checkNick(vo) > 0) {
 				out.println("<script>alert('계정 또는 닉네임이 존재합니다.'); location.href='/signup'</script>");
 				out.flush();
