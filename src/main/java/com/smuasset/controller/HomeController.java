@@ -70,7 +70,7 @@ public class HomeController {
 			PrintWriter out = res.getWriter();
 			CommunityVO vo = new CommunityVO();
 			vo.setTitle(req.getParameter("title"));
-			vo.setDate(new Timestamp(new Date().getTime()));
+			vo.setTimeStamp(new Timestamp(new Date().getTime()));
 			vo.setContent(req.getParameter("content"));
 			vo.setHits(0);
 			vo.setNickname((String)session.getAttribute("nickname"));

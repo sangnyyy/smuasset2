@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smuasset.mapper.communityMapper">
-	<insert id="insertWrite" parameterType="communityVO">
-		INSERT INTO community (title, nickname, date, hits, content) values (#{title}, #{nickname}, #{date}, #{hits}, #{content});
+	<insert id="insertWrite" parameterType="communityVO">								
+		INSERT INTO community (title, nickname, timestamp, hits, content) values
+		 (#{title}, #{nickname},CURRENT_TIMESTAMP, #{hits}, #{content});
 	</insert>
 </mapper>
