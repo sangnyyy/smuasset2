@@ -65,7 +65,7 @@
 							method="POST">
 							<div class="form-group">
 								<input type="text" placeholder="Email" class="form-control"
-									name="email">
+									name="email" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<input type="password" placeholder="Password"
