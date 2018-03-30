@@ -117,14 +117,12 @@
 		<form method=POST>
 			<div class="form-group">
 				<label for="subject">제목</label> <input type="text"
-					class="form-control" name="subject" id="subject"
-					placeholder="제목 입력">
+					class="form-control" name="title" id="title"
+					placeholder="제목 입력" autocomplete="off">
 			</div>
-		
 			<div class="form-group">
 				<label for="content">내용</label>
-				<textarea class="form-control" rows="10" name="content" id="content" placeholder="내용 입력"></textarea>
-
+				<textarea class="form-control" rows="10" name="content" id="content" placeholder="내용 입력" autocomplete="off"></textarea>
 			</div>
 			<button type="submit" class="btn btn-default">등록하기</button>
 		</form>

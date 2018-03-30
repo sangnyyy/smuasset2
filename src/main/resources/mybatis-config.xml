@@ -2,12 +2,10 @@
 <!DOCTYPE configuration 
     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
-    <configuration>
-         <typeAliases>
-            <typeAlias type="com.smuasset.dto.MemberVO" alias="memberVO"/>
-        </typeAliases>
-
-
-        
-    </configuration>
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.smuasset.dto.MemberVO" alias="memberVO" />
+		<typeAlias type="com.smuasset.dto.CommunityVO" alias="communityVO" />
+	</typeAliases>
+</configuration>
 

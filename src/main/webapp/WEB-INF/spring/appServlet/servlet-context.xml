@@ -23,6 +23,15 @@
 	
 	<context:component-scan base-package="com.smuasset.controller" />
 	
-	
-	
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+

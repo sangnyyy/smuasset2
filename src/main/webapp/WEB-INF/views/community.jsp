@@ -170,7 +170,7 @@
 			</tbody>
 		</table>
 		<hr />
-		<a class="btn btn-default" href="#">글쓰기</a>
+		<a class="btn btn-default" href="/cwrite">글쓰기</a>
 		<div class="text-center">
 			<ul class="pagination">
 				<li><a href="#">1</a></li>

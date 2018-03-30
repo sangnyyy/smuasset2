@@ -3,6 +3,7 @@ package com.smuasset.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.smuasset.dto.CommunityVO;
 import com.smuasset.dto.MemberVO;
+import com.smuasset.service.CommunityService;
 import com.smuasset.service.MemberService;
 
 /**
@@ -33,7 +36,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	@Inject
-	MemberService service;
+	CommunityService communityService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -50,13 +53,35 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/cwrite", method = RequestMethod.GET)
-	public String communityWrite() {
-		return "cwrite";
+	public String communityWrite(HttpSession session) {
+		if(session.getAttribute("nickname") != null) {
+			return "cwrite";
+		}else {
+			return "index";
+		}
 	}
 
 	@RequestMapping(value = "/cwrite", method = RequestMethod.POST)
-	public String communityWriteFinish() {
-		return "index";
+	public void communityWriteFinish(HttpServletResponse res, HttpServletRequest req, HttpSession session) throws IOException {
+		
+		try {
+			res.setContentType("text/html; charset=UTF-8");
+			req.setCharacterEncoding("UTF-8"); // POST방식 encoding 해결
+			PrintWriter out = res.getWriter();
+			CommunityVO vo = new CommunityVO();
+			vo.setTitle(req.getParameter("title"));
+			vo.setDate(new Timestamp(new Date().getTime()));
+			vo.setContent(req.getParameter("content"));
+			vo.setHits(0);
+			vo.setNickname((String)session.getAttribute("nickname"));
+			communityService.insertWrite(vo);
+			out.println("<script>alert('글이 등록되었습니다.'); location.href='/community'</script>");
+			out.flush();
+			out.close();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@RequestMapping(value = "/pwrite", method = RequestMethod.GET)
