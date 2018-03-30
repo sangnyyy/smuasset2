@@ -18,5 +18,4 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void insertWrite(CommunityVO vo) {
 		sqlSession.insert(Namespace+".insertWrite", vo);
 	}
-
 }

@@ -54,7 +54,7 @@
 			<c:when test="${sessionScope.nickname ne null }">
 				<div id="navbar" class="navbar-collapse collapse">
 					<form class="navbar-form navbar-right" style="height: 30px;"
-						action="/smu/logout">
+						action="/logout">
 						<span class="navbar-brand" style="padding-top: 7px;">${sessionScope.nickname }님
 							환영합니다.</span>
 						<button type="submit" class="btn btn-success">로그아웃</button>
@@ -63,7 +63,7 @@
 			</c:when>
 			<c:otherwise>
 				<div id="navbar" class="navbar-collapse collapse">
-					<form class="navbar-form navbar-right" action="/smu/login"
+					<form class="navbar-form navbar-right" action="/login"
 						method="POST">
 						<div class="form-group">
 							<input type="text" placeholder="Email" class="form-control"

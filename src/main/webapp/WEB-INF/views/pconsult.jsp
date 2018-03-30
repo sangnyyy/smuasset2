@@ -63,7 +63,7 @@
 			</c:when>
 			<c:otherwise>
 				<div id="navbar" class="navbar-collapse collapse">
-					<form class="navbar-form navbar-right" action="/smu/login"
+					<form class="navbar-form navbar-right" action="/login"
 						method="POST">
 						<div class="form-group">
 							<input type="text" placeholder="Email" class="form-control"
