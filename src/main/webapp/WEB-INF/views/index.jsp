@@ -28,7 +28,7 @@
 	height: 300px;
 }
 
-#upperContainer>h1 {
+#upperContainer>h1, #upperContainer>p {
 	text-align: center;
 }
 
@@ -94,10 +94,10 @@
 				<b>Welcome!</b>
 			</h1>
 			<br />
-			<h3>
+			<p>
 				저희 <b>SMU ASSET</b>은 소규모 자본을 모아 대규모 자본을 만들어 투자영역에 대한 확장성을 제공합니다.<br />
 				또한 여러분의 투자성향을 파악하여 자본투자에 대한 성공적인 방향성 제시를 해주는 플랫폼입니다.
-			</h3>
+			</p>
 			<br />
 			<!--<p><a class="btn btn-primary btn-lg" href="#" role="button">자세히 보기 &raquo;</a></p>-->
 		</div>
